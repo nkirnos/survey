@@ -5,7 +5,7 @@ error_reporting(E_ALL);
 
 spl_autoload_register(function ($class_name) {
     $class_name = str_replace('\\', '/', $class_name);
-    require_once  'src/' . $class_name . '.php';
+    require_once 'src/' . $class_name . '.php';
 });
 
 use Surveys\DataLoader\JsonDataLoader;

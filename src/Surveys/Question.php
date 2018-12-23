@@ -1,4 +1,5 @@
 <?php
+
 namespace Surveys;
 
 class Question
@@ -37,13 +38,13 @@ class Question
      */
     public function setVariants($variants)
     {
-        foreach($variants as $variant_info) {
-            if(is_a($variant_info, Variant::class)) {
+        foreach ($variants as $variant_info) {
+            if (is_a($variant_info, Variant::class)) {
                 $this->addVariant($variant_info);
-            } elseif(is_array($variant_info) && !empty($variant_info['text'])) {
+            } elseif (is_array($variant_info) && !empty($variant_info['text'])) {
                 $variant = new Variant();
                 $variant->setText($variant_info['text']);
-                if(!empty($variant_info['tags']) && is_array($variant_info['tags'])) {
+                if (!empty($variant_info['tags']) && is_array($variant_info['tags'])) {
                     foreach ($variant_info['tags'] as $tag) {
                         $variant->addTag($tag);
                     }
@@ -66,7 +67,7 @@ class Question
     public function getTags()
     {
         $result = [];
-        foreach($this->getVariants() as $variant) {
+        foreach ($this->getVariants() as $variant) {
             $result = array_merge($result, $variant->getTags());
         }
         return array_unique($result);

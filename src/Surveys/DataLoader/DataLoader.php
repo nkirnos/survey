@@ -22,10 +22,10 @@ class DataLoader
      */
     public function setQuestions(array $questions)
     {
-        foreach($questions as $question_info) {
-            if(is_a($question_info, Question::class)) {
+        foreach ($questions as $question_info) {
+            if (is_a($question_info, Question::class)) {
                 $this->addQuestion($question_info);
-            } elseif(is_array($question_info) && !empty($question_info['text']) && !empty($question_info['variants'])) {
+            } elseif (is_array($question_info) && !empty($question_info['text']) && !empty($question_info['variants'])) {
                 $question = new Question();
                 $question->setText($question_info['text']);
                 $question->setVariants($question_info['variants']);

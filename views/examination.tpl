@@ -22,13 +22,14 @@
         <div class="q_row">
             <h3 class="mb-12"><?=$question->getText()?></h3>
             <div class="d-block my-3">
-              <?php foreach($question->getVariants() as $variant):?>
-              <?php $input_id = $question->getID() . '_' . $variant->getID();?>
-              <div class="custom-control custom-radio">
-                <input id="q_<?=$input_id?>" name="q_<?=$question->getID()?>" type="radio" class="custom-control-input q_input" value="<?=$variant->getId()?>">
-                <label class="custom-control-label" for="q_<?=$input_id?>"><?=$variant->getText()?></label>
-              </div>
-              <?php endforeach;?>
+                <?php foreach($question->getVariants() as $variant):?>
+                <?php $input_id = $question->getID() . '_' . $variant->getID();?>
+                <div class="custom-control custom-radio">
+                    <input id="q_<?=$input_id?>" name="q_<?=$question->getID()?>" type="radio"
+                           class="custom-control-input q_input" value="<?=$variant->getId()?>">
+                    <label class="custom-control-label" for="q_<?=$input_id?>"><?=$variant->getText()?></label>
+                </div>
+                <?php endforeach;?>
             </div>
         </div>
         <?php endforeach;?>
@@ -42,7 +43,9 @@
         <div class="col-md-3"><?=$tag?> (<?=$percent?>%)</div>
         <div class="col-md-9">
             <div class="progress">
-                <div class="progress-bar" role="progressbar" style="width: <?=$percent?>%;" aria-valuenow="<?=$percent?>" aria-valuemin="0" aria-valuemax="100"><?=$percent?>%</div>
+                <div class="progress-bar" role="progressbar" style="width: <?=$percent?>%;"
+                     aria-valuenow="<?=$percent?>" aria-valuemin="0" aria-valuemax="100"><?=$percent?>%
+                </div>
             </div>
         </div>
     </div>
@@ -62,26 +65,27 @@
         integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
         crossorigin="anonymous"></script>
 <script>
-    $(function() {
-        function next_slide(){
+    $(function () {
+        function next_slide() {
             $('.q_row').hide();
             var index = $('button.btn-next').data('next-index');
             $('.q_row:eq(' + index + ')').show();
-            if($('.q_row').length > index){
-                $('button.btn-next').data('next-index', ++index);   
-                $('button.btn-next').hide();   
+            if ($('.q_row').length > index) {
+                $('button.btn-next').data('next-index', ++index);
+                $('button.btn-next').hide();
             } else {
                 $('button.btn-next').hide();
                 $('form').submit();
             }
         }
+
         $('button.btn-next').data('next-index', 0);
         next_slide();
-        $('button.btn-next').click(function(){
+        $('button.btn-next').click(function () {
             next_slide();
         });
-        $('.q_input').change(function(){
-            $('button.btn-next').show();   
+        $('.q_input').change(function () {
+            $('button.btn-next').show();
         })
     });
 </script>

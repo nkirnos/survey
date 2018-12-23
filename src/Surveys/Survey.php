@@ -29,7 +29,7 @@ class Survey
 
     public function __construct($data_loader = null)
     {
-        if(!empty($data_loader)) {
+        if (!empty($data_loader)) {
             $this->setDataLoader($data_loader);
         }
     }

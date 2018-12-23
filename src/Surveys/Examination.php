@@ -1,4 +1,5 @@
 <?php
+
 namespace Surveys;
 
 
@@ -12,6 +13,7 @@ class Examination
      * @var \View
      */
     protected $view;
+
     /**
      * @return mixed
      */
@@ -30,25 +32,25 @@ class Examination
 
     public function perform()
     {
-        if($this->canPerform()) {
+        if ($this->canPerform()) {
             return $this->handle();
         }
         return false;
     }
 
-    protected  function handle()
+    protected function handle()
     {
         $survey = $this->getSurvey()->getDataLoader();
         $data = [
             'complete' => false,
             'survey' => $survey,
         ];
-        if(!empty($_POST)) {
+        if (!empty($_POST)) {
             $data['complete'] = true;
             $answers = [];
-            foreach($survey->getQuestions() as $question) {
+            foreach ($survey->getQuestions() as $question) {
                 $variants = $question->getVariants();
-                if(array_key_exists('q_' . $question->getId(), $_POST)) {
+                if (array_key_exists('q_' . $question->getId(), $_POST)) {
                     $answers[$question->getId()] = [
                         'question_tags' => $question->getTags(),
                         'answer_tags' => $variants[$_POST['q_' . $question->getId()]]->getTags()
@@ -56,15 +58,15 @@ class Examination
                 }
             }
             $result = [];
-            foreach($answers as $answer) {
-                foreach($answer['question_tags'] as $tag){
-                    if(empty($result[$tag])){
-                        $result[$tag] = [ 'question' => 1, 'answer' => 0];
+            foreach ($answers as $answer) {
+                foreach ($answer['question_tags'] as $tag) {
+                    if (empty($result[$tag])) {
+                        $result[$tag] = ['question' => 1, 'answer' => 0];
                     } else {
                         $result[$tag]['question']++;
                     }
                 }
-                foreach($answer['answer_tags'] as $tag){
+                foreach ($answer['answer_tags'] as $tag) {
                     $result[$tag]['answer']++;
                 }
             }
