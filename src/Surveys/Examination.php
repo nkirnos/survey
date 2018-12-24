@@ -48,26 +48,21 @@ class Examination
         if (!empty($_POST)) {
             $data['complete'] = true;
             $answers = [];
+            $result = [];
             foreach ($survey->getQuestions() as $question) {
                 $variants = $question->getVariants();
                 if (array_key_exists('q_' . $question->getId(), $_POST)) {
-                    $answers[$question->getId()] = [
-                        'question_tags' => $question->getTags(),
-                        'answer_tags' => $variants[$_POST['q_' . $question->getId()]]->getTags()
-                    ];
-                }
-            }
-            $result = [];
-            foreach ($answers as $answer) {
-                foreach ($answer['question_tags'] as $tag) {
-                    if (empty($result[$tag])) {
-                        $result[$tag] = ['question' => 1, 'answer' => 0];
-                    } else {
-                        $result[$tag]['question']++;
+                    $variant = $variants[$_POST['q_' . $question->getId()]];
+                    foreach($question->getTags() as $tag) {
+                        if (empty($result[$tag])) {
+                            $result[$tag] = ['question' => 1, 'answer' => 0];
+                        } else {
+                            $result[$tag]['question']++;
+                        }    
                     }
-                }
-                foreach ($answer['answer_tags'] as $tag) {
-                    $result[$tag]['answer']++;
+                    foreach($variant->getTags() as $tag) {
+                        $result[$tag]['answer']++;    
+                    }
                 }
             }
             $data['result'] = $result;

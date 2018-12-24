@@ -5,6 +5,7 @@ namespace Surveys;
 class Question
 {
     use HasId;
+    use Taggable;
 
     protected $text;
     protected $variants = [];
@@ -47,6 +48,7 @@ class Question
                 if (!empty($variant_info['tags']) && is_array($variant_info['tags'])) {
                     foreach ($variant_info['tags'] as $tag) {
                         $variant->addTag($tag);
+                        $this->addTag($tag);
                     }
                 }
                 $this->addVariant($variant);
@@ -62,15 +64,6 @@ class Question
         $id = count($this->variants);
         $variant->setId($id);
         $this->variants[] = $variant;
-    }
-
-    public function getTags()
-    {
-        $result = [];
-        foreach ($this->getVariants() as $variant) {
-            $result = array_merge($result, $variant->getTags());
-        }
-        return array_unique($result);
     }
 
 }
